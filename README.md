@@ -1,9 +1,9 @@
 
-# Notification Service
+# Notification Service ✉️
 
 This project was built with Spring Boot and PostgreSQL.
 
-## Prerequisites
+## 📋 Prerequisites
 
 Ensure you have the following installed before starting:
 
@@ -11,9 +11,9 @@ Ensure you have the following installed before starting:
 - Docker and Docker Compose
 - Gradle 8.10 or higher
 
-## Local Environment Setup
+## ⚙️ Local Environment Setup 
 
-### 1. Database Setup with Docker Compose
+### 1. Database Setup with Docker Compose 🐳
 
 This project uses PostgreSQL as the database. You can spin up a local instance using Docker Compose.
 
@@ -26,7 +26,7 @@ docker-compose down
 ```
 
 
-### 2. Running the Service
+### 2. Running the Service ▶️
 
 To run the service locally:
 
@@ -41,7 +41,7 @@ or with the green `run` button on the left margin of the "NotificationServiceApp
 
 The service will be available at [http://localhost:8080/](http://localhost:8080/)
 
-### 3. Database Migrations with Flyway
+### 3. Database Migrations with Flyway 🗄️
 
 Database migrations are managed by Flyway. Make sure to follow the naming conventions below when creating new migration scripts:
 
@@ -58,7 +58,7 @@ V001__create_email_templates_table.sql
 R__populate_initial_data.sql
 ```
 
-### 4. Running Tests
+### 4. Running Tests 🔬
 
 The project includes various levels of testing: unit, integration, contract, and component tests. You can run all tests using Gradle.
 
@@ -92,7 +92,7 @@ The project includes various levels of testing: unit, integration, contract, and
 ./gradlew build
 ```
 
-## Key Dependencies
+## 📦 Key Dependencies
 
 The project uses the following key dependencies:
 
@@ -101,7 +101,7 @@ The project uses the following key dependencies:
 - **Flyway:** Tool for managing database migrations.
 
 
-## Additional Documentation
+## 📖 Additional Documentation
 
 For more information, refer to the following resources:
 
