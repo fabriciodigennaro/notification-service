@@ -38,5 +38,5 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build --no-daemon
 
-#      - name: Check coverage
-#        run: ./gradlew jacocoTestReport jacocoTestCoverageVerification
+      - name: Check coverage
+        run: ./gradlew jacocoTestReport jacocoTestCoverageVerification
