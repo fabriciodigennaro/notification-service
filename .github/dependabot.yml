@@ -1,0 +1,29 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    allow:
+      - dependency-type: "all"
+    ignore:
+      - dependency-name: "org.flywaydb:flyway-core"
+    reviewers:
+      - "diegolopezgrisanti"
+      - "solblack"
+      - "fabriciodigennaro"
+    groups:
+      all-minor-and-patch:
+        patterns:
+          - "*"
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    reviewers:
+      - "diegolopezgrisanti"
+      - "solblack"
+      - "fabriciodigennaro"
