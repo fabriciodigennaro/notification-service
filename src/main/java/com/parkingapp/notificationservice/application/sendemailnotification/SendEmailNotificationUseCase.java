@@ -4,6 +4,7 @@ import com.parkingapp.notificationservice.domain.email.EmailNotification;
 import com.parkingapp.notificationservice.domain.email.EmailService;
 import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
+import com.parkingapp.notificationservice.domain.exceptions.EmailTemplateNotFoundException;
 
 import java.util.UUID;
 
@@ -20,7 +21,8 @@ public class SendEmailNotificationUseCase {
     }
 
     public void execute(UUID userId, UUID templateId) {
-        EmailTemplate emailTemplate = emailTemplateRepository.getEmailTemplateById(templateId);
+        EmailTemplate emailTemplate = emailTemplateRepository.getEmailTemplateById(templateId)
+                .orElseThrow(() -> new EmailTemplateNotFoundException(templateId));
         String userEmailAddress = "test@email.com";
         EmailNotification emailNotification = new EmailNotification(
                 userEmailAddress,

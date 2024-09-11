@@ -1,13 +1,15 @@
 package com.parkingapp.notificationservice.application.sendemailnotification;
 
-import com.parkingapp.notificationservice.domain.email.EmailNotification;
 import com.parkingapp.notificationservice.domain.email.EmailService;
 import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
+import com.parkingapp.notificationservice.domain.exceptions.EmailTemplateNotFoundException;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,7 +32,7 @@ class SendEmailNotificationUseCaseTest {
     @Test
     void shouldSendAnEmailNotification() {
         // GIVEN
-        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(emailTemplate);
+        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
 
         // WHEN
         useCase.execute(userId, templateId);
@@ -38,5 +40,16 @@ class SendEmailNotificationUseCaseTest {
         // THEN
         verify(emailTemplateRepository).getEmailTemplateById(templateId);
     }
-  
+
+    @Test
+    void shouldThrowEmailTemplateNotFoundExceptionWhenTemplateNotExists() {
+        // GIVEN
+        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.empty());
+
+        // WHEN & THEN
+        assertThrows(EmailTemplateNotFoundException.class, () -> {
+            useCase.execute(userId, templateId);
+        });
+        verify(emailTemplateRepository).getEmailTemplateById(templateId);
+    }
 }
