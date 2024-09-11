@@ -30,6 +30,12 @@ class SendEmailNotificationUseCaseTest {
     @Test
     void shouldSendAnEmailNotification() {
         // GIVEN
+        String userEmailAddress = "test@email.com";
+        EmailNotification emailNotification = new EmailNotification(
+                userEmailAddress,
+                emailTemplate.getSubject(),
+                emailTemplate.getBody()
+        );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(emailTemplate);
 
         // WHEN
@@ -37,6 +43,7 @@ class SendEmailNotificationUseCaseTest {
 
         // THEN
         verify(emailTemplateRepository).getEmailTemplateById(templateId);
+        verify(emailService).send(emailNotification);
     }
   
 }
