@@ -34,7 +34,7 @@ public class JmsEmailServiceIntegrationTest {
     }
 
     @Test
-    void testSendEmail() throws Exception {
+    void shouldSendEmail() throws Exception {
         // GIVEN
         String recipient = "test2@recipient.com";
         String subject = "Integration Test Subject";
