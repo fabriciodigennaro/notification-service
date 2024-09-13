@@ -24,9 +24,13 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
-	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
+	implementation("org.springframework.boot:spring-boot-starter-mail")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+	implementation("org.postgresql:postgresql:42.7.4")
+	implementation("org.flywaydb:flyway-core:9.11.0")
+	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
+	implementation("jakarta.mail:jakarta.mail-api:2.1.3")
 
 	// Lombok
 	compileOnly("org.projectlombok:lombok:1.18.34")
@@ -56,6 +60,7 @@ dependencies {
 	testImplementation("org.wiremock:wiremock-standalone:3.9.1")
 	testImplementation("org.awaitility:awaitility:4.2.2")
 	testImplementation("com.tngtech.archunit:archunit:1.3.0")
+	testImplementation("com.icegreen:greenmail:2.0.1")
 }
 
 jacoco {

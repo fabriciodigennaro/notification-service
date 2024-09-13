@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    hikari:
+      connectionTimeout: 20000
+      maximumPoolSize: 5
+    url: jdbc:postgresql://localhost:5432/notificationsDB
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    enabled: true
+    baselineOnMigrate: true
+    locations: classpath:db/migrations
+  email:
+    host: smtp.gmail.com
+    sender-email: ${GMAIL_ADDRESS}
+    password: ${GMAIL_PASS_KEY}
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          connection-timeout: 5000
+          starttls:
+            enable: true
+            required: true
+          timeout: 5000
+          write-timeout: 5000
