@@ -3,6 +3,21 @@ spring:
     enabled: true
     baselineOnMigrate: true
     locations: classpath:db/migrations
+  email:
+    host: localhost
+    sender-email: 'test@test.com'
+    password: '1234'
+    port: 3025
+    properties:
+      mail:
+        smtp:
+          auth: false
+          connection-timeout: 5000
+          starttls:
+            enable: false
+            required: false
+          timeout: 5000
+          write-timeout: 5000
 
 clients:
   payment:
