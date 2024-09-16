@@ -1,4 +1,4 @@
-package com.parkingapp.notificationservice.domain.email;
+package com.parkingapp.notificationservice.domain.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

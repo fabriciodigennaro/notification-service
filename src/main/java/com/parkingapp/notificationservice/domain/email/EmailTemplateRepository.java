@@ -1,7 +1,8 @@
 package com.parkingapp.notificationservice.domain.email;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public interface EmailTemplateRepository {
-    EmailTemplate getEmailTemplateById(UUID templateId);
+    Optional<EmailTemplate> getEmailTemplateById(UUID templateId);
 }

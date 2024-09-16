@@ -6,6 +6,7 @@ import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.Mockito.mock;
@@ -36,7 +37,7 @@ class SendEmailNotificationUseCaseTest {
                 emailTemplate.getSubject(),
                 emailTemplate.getBody()
         );
-        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(emailTemplate);
+        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
 
         // WHEN
         useCase.execute(userId, templateId);
