@@ -8,6 +8,8 @@ import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+import static com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationResponse.*;
+
 public class SendEmailNotificationUseCase {
     private final EmailTemplateRepository emailTemplateRepository;
     private final EmailService emailService;
@@ -20,17 +22,24 @@ public class SendEmailNotificationUseCase {
         this.emailService = emailService;
     }
 
-    public void execute(UUID userId, UUID templateId) {
+    public SendEmailNotificationResponse execute(UUID userId, UUID templateId) {
         Optional<EmailTemplate> emailTemplate = emailTemplateRepository.getEmailTemplateById(templateId);
-        String userEmailAddress = "test@email.com";
+        Optional<String> userEmailAddress = Optional.of("test@email.com");
 
-        if (emailTemplate.isPresent()) {
-            EmailNotification emailNotification = new EmailNotification(
-                    userEmailAddress,
-                    emailTemplate.get().getSubject(),
-                    emailTemplate.get().getBody()
-            );
-            this.emailService.send(emailNotification);
+        if (emailTemplate.isEmpty()) {
+            return new EmailTemplateFoundFailure();
         }
+
+        if (userEmailAddress.isEmpty()) {
+            return new UserEmailAddressFailure();
+        }
+
+        EmailNotification emailNotification = new EmailNotification(
+                userEmailAddress.get(),
+                emailTemplate.get().getSubject(),
+                emailTemplate.get().getBody()
+        );
+        this.emailService.send(emailNotification);
+        return new Successful();
     }
 }
