@@ -4,6 +4,7 @@ import com.parkingapp.notificationservice.domain.email.EmailNotification;
 import com.parkingapp.notificationservice.domain.email.EmailService;
 import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
+import com.parkingapp.notificationservice.domain.user.UserRepository;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -18,8 +19,9 @@ import static org.mockito.Mockito.when;
 
 class SendEmailNotificationUseCaseTest {
     private final EmailTemplateRepository emailTemplateRepository = mock(EmailTemplateRepository.class);
+    private final UserRepository userRepository = mock(UserRepository.class);
     private final EmailService emailService = mock(EmailService.class);
-    private final SendEmailNotificationUseCase useCase = new SendEmailNotificationUseCase(emailTemplateRepository, emailService);
+    private final SendEmailNotificationUseCase useCase = new SendEmailNotificationUseCase(emailTemplateRepository, userRepository, emailService);
 
     UUID userId = UUID.randomUUID();
     UUID templateId = UUID.randomUUID();
@@ -41,6 +43,7 @@ class SendEmailNotificationUseCaseTest {
                 emailTemplate.getBody()
         );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
+        when(userRepository.getUserEmailAddressByUserId(userId)).thenReturn(Optional.of(userEmailAddress));
 
         // WHEN
         SendEmailNotificationResponse result = useCase.execute(userId, templateId);
@@ -48,6 +51,7 @@ class SendEmailNotificationUseCaseTest {
         // THEN
         assertThat(result).isInstanceOf(Successful.class);
         verify(emailTemplateRepository).getEmailTemplateById(templateId);
+        verify(userRepository).getUserEmailAddressByUserId(userId);
         verify(emailService).send(emailNotification);
     }
 
@@ -61,6 +65,7 @@ class SendEmailNotificationUseCaseTest {
                 emailTemplate.getBody()
         );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.empty());
+        when(userRepository.getUserEmailAddressByUserId(userId)).thenReturn(Optional.of(userEmailAddress));
 
         // WHEN
         SendEmailNotificationResponse result = useCase.execute(userId, templateId);
@@ -68,6 +73,29 @@ class SendEmailNotificationUseCaseTest {
         // THEN
         assertThat(result).isInstanceOf(EmailTemplateFoundFailure.class);
         verify(emailTemplateRepository).getEmailTemplateById(templateId);
+        verify(userRepository).getUserEmailAddressByUserId(userId);
+        verify(emailService, never()).send(emailNotification);
+    }
+
+    @Test
+    void shouldReturnAUserEmailAddressFailureIfEmailTemplateNotExists() {
+        // GIVEN
+        String userEmailAddress = "test@email.com";
+        EmailNotification emailNotification = new EmailNotification(
+                userEmailAddress,
+                emailTemplate.getSubject(),
+                emailTemplate.getBody()
+        );
+        when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
+        when(userRepository.getUserEmailAddressByUserId(userId)).thenReturn(Optional.empty());
+
+        // WHEN
+        SendEmailNotificationResponse result = useCase.execute(userId, templateId);
+
+        // THEN
+        assertThat(result).isInstanceOf(UserEmailAddressFailure.class);
+        verify(emailTemplateRepository).getEmailTemplateById(templateId);
+        verify(userRepository).getUserEmailAddressByUserId(userId);
         verify(emailService, never()).send(emailNotification);
     }
   
