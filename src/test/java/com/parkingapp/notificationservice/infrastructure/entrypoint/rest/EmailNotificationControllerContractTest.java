@@ -108,6 +108,6 @@ class EmailNotificationControllerContractTest {
                 .contentType(ContentType.JSON)
                 .body(requestBody)
                 .when()
-                .post("/send-email");
+                .post("/email-notification");
     }
 }
