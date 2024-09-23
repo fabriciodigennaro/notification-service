@@ -1,7 +1,6 @@
 package com.parkingapp.notificationservice.infrastructure.entrypoint.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationResponse;
 import com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationUseCase;
 import com.parkingapp.notificationservice.infrastructure.fixtures.initializers.testannotation.ContractTest;
 import io.restassured.http.ContentType;
@@ -17,15 +16,14 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.UUID;
 
 import static com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationResponse.*;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ContractTest
-@WebMvcTest(controllers = EmailController.class)
-class EmailControllerContractTest {
+@WebMvcTest(controllers = EmailNotificationController.class)
+class EmailNotificationControllerContractTest {
 
     @Autowired
     private WebApplicationContext context;

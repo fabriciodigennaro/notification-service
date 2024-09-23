@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/send-email")
-@Tag(name = "Send email", description = "Send an email notification")
-public class EmailController {
+@RequestMapping("/email")
+@Tag(name = "Email", description = "All about emails")
+public class EmailNotificationController {
     private final SendEmailNotificationUseCase sendEmailNotificationUseCase;
 
-    EmailController(SendEmailNotificationUseCase sendEmailNotificationUseCase) {
+    EmailNotificationController(SendEmailNotificationUseCase sendEmailNotificationUseCase) {
         this.sendEmailNotificationUseCase = sendEmailNotificationUseCase;
     }
 
@@ -55,7 +55,7 @@ public class EmailController {
                     }
             )
     })
-    @PostMapping
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void sendEmail(@RequestBody @Valid SendEmailRequest request) {
         sendEmailNotificationUseCase.execute(request.getUserId(), request.getTemplateId());
