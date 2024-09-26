@@ -1,12 +1,14 @@
 package com.parkingapp.notificationservice.infrastructure.database;
 
+import com.parkingapp.notificationservice.domain.user.User;
 import com.parkingapp.notificationservice.domain.user.UserRepository;
 import com.parkingapp.notificationservice.infrastructure.fixtures.initializers.testannotation.IntegrationTest;
 import com.parkingapp.notificationservice.infrastructure.fixtures.initializers.testannotation.WithPostgreSql;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,42 +28,67 @@ class JdbcUserRepositoryIntegrationTest {
     UUID userId = UUID.randomUUID();
     UUID userId2 = UUID.randomUUID();
     String email = "dummy@email.com";
+    String email2 = "dummy2@email.com";
+    User user = new User(userId, email);
 
-    @Test
-    void shouldGetAUserEmailAddressById() {
-        // GIVEN
-        givenAnExistingUser();
-
-        // WHEN
-        Optional<String> expectedEmailAddress = userRepository.getUserEmailAddressByUserId(userId);
-
-        // THEN
-        assertThat(expectedEmailAddress).isEqualTo(Optional.of(email));
-    }
-
-    @Test
-    void shouldNotFindAEmailAddressWhenUserIdNotExists() {
-        // GIVEN
-        givenAnExistingUser();
-
-        // WHEN
-        Optional<String> expectedEmailAddress = userRepository.getUserEmailAddressByUserId(userId2);
-
-        // THEN
-        assertThat(expectedEmailAddress).isEmpty();
-    }
-
-    private void givenAnExistingUser() {
-        MapSqlParameterSource params = new MapSqlParameterSource()
-                .addValue("id", userId)
-                .addValue("email", email);
-
-        namedParameterJdbcTemplate.update(
-                """
-                        INSERT INTO users(id, email)
-                        VALUES (:id, :email);
-                        """,
-                params
+    @BeforeEach
+    void setUp() {
+        JdbcTestUtils.deleteFromTables(
+                namedParameterJdbcTemplate.getJdbcTemplate(),
+                "users"
         );
+    }
+
+    @Test
+    void shouldGetAUserById() {
+        // GIVEN
+        userRepository.saveUser(user);
+
+        // WHEN
+        Optional<User> expectedUser = userRepository.getUserById(userId);
+
+        // THEN
+        assertThat(expectedUser).isEqualTo(Optional.of(user));
+    }
+
+    @Test
+    void shouldNotFindAUserWhenUserIdNotExists() {
+        // GIVEN
+        userRepository.saveUser(user);
+
+        // WHEN
+        Optional<User> expectedUser = userRepository.getUserById(userId2);
+
+        // THEN
+        assertThat(expectedUser).isEmpty();
+    }
+
+    @Test
+    void shouldSaveAUser() {
+        // GIVEN
+        boolean saveResult = userRepository.saveUser(user);
+
+        // THEN
+        Optional<User> result = userRepository.getUserById(user.getId());
+        assertThat(result).isEqualTo(Optional.of(user));
+        assertThat(saveResult).isTrue();
+    }
+
+    @Test
+    void shouldUpdateAUser() {
+        // GIVEN
+        userRepository.saveUser(user);
+        User userWithNewEmail = new User(userId, email2);
+
+        // WHEN
+        boolean isUserSaved = userRepository.saveUser(userWithNewEmail);
+        Optional<User> userUpdated = userRepository.getUserById(userWithNewEmail.getId());
+
+        // THEN
+        assertThat(isUserSaved).isTrue();
+        assertThat(userUpdated).isPresent();
+        assertThat(userWithNewEmail).isEqualTo(userUpdated.get());
+        assertThat(user.getEmail()).isNotEqualTo(userWithNewEmail.getEmail());
+        assertThat(user.getId()).isEqualTo(userWithNewEmail.getId());
     }
 }

@@ -1,5 +1,6 @@
 package com.parkingapp.notificationservice.infrastructure.entrypoint.rest;
 
+import com.parkingapp.notificationservice.domain.exceptions.UserAlreadyExistsException;
 import com.parkingapp.notificationservice.infrastructure.entrypoint.rest.response.error.ErrorResponse;
 import com.parkingapp.notificationservice.infrastructure.entrypoint.rest.response.error.ValidationError;
 import com.parkingapp.notificationservice.infrastructure.entrypoint.rest.response.error.ValidationErrorResponse;
@@ -46,4 +47,8 @@ public class GlobalExceptionHandler {
     ErrorResponse handle(HttpMessageNotReadableException exception) {
         return new ErrorResponse(exception.getMessage());
     }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    ErrorResponse handle(UserAlreadyExistsException exception) { return new ErrorResponse(exception.getMessage()); }
 }

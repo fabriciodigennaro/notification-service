@@ -1,7 +1,9 @@
 package com.parkingapp.notificationservice.infrastructure.database;
 
+import com.parkingapp.notificationservice.domain.user.User;
 import com.parkingapp.notificationservice.domain.user.UserRepository;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import java.sql.ResultSet;
@@ -19,11 +21,11 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<String> getUserEmailAddressByUserId(UUID userId) {
+    public Optional<User> getUserById(UUID userId) {
         return namedParameterJdbcTemplate.query(
                 """
                         SELECT * FROM users
-                        WHERE id = :userId
+                        WHERE user_id = :userId
                         """,
                 Map.of("userId", userId),
                 new UserRowMapper()
@@ -31,11 +33,31 @@ public class JdbcUserRepository implements UserRepository {
                 .stream().findFirst();
     }
 
-    private static class UserRowMapper implements RowMapper<String> {
+    @Override
+    public boolean saveUser(User user) {
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("userId", user.getId())
+                .addValue("email", user.getEmail());
+
+
+        return namedParameterJdbcTemplate.update(
+                """
+                INSERT INTO users(user_id, email)
+                VALUES (:userId, :email)
+                ON CONFLICT (user_id) DO UPDATE SET email = :email
+                """,
+                params
+        ) > 0;
+    }
+
+    private static class UserRowMapper implements RowMapper<User> {
 
         @Override
-        public String mapRow(ResultSet rs, int rowNum) throws SQLException {
-            return rs.getString("email");
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+            return new User(
+                    UUID.fromString(rs.getString("user_id")),
+                    rs.getString("email")
+            );
         }
     }
 }
