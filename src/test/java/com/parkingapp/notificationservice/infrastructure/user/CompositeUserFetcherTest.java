@@ -9,7 +9,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -87,17 +86,15 @@ class CompositeUserFetcherTest {
     }
 
     @Test
-    void shouldThrowAnExceptionFetchingTheUser() {
+    void shouldReturnEmptyOptionalWhenFetchingUserFails() {
         // GIVEN
         when(userRepository.getUserById(userId)).thenThrow(new RuntimeException("Database failure"));
 
-        // WHEN & THEN
-        CompositeUserFetcher compositeUserFetcher = new CompositeUserFetcher(userRepository, userService);
+        // WHEN
+        Optional<User> userFetcherResult = compositeUserFetcher.fetch(userId);
 
-        assertThatThrownBy(() -> compositeUserFetcher.fetch(userId))
-                .isInstanceOf(RuntimeException.class)
-                .hasMessageContaining("Database failure");
-
+        // THEN
+        assertThat(userFetcherResult).isEmpty();
         verify(userService, times(0)).getUserById(userId);
     }
 }
