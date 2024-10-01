@@ -33,7 +33,7 @@ public class CompositeUserFetcher implements UserFetcher {
 
             return Optional.empty();
         } catch (Throwable e) {
-            throw new RuntimeException(e);
+            return Optional.empty();
         }
     }
 }
