@@ -34,20 +34,20 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public boolean saveUser(User user) {
+    public void saveUser(User user) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("userId", user.getId())
                 .addValue("email", user.getEmail());
 
 
-        return namedParameterJdbcTemplate.update(
+        namedParameterJdbcTemplate.update(
                 """
                 INSERT INTO users(user_id, email)
                 VALUES (:userId, :email)
                 ON CONFLICT (user_id) DO UPDATE SET email = :email
                 """,
                 params
-        ) > 0;
+        );
     }
 
     private static class UserRowMapper implements RowMapper<User> {

@@ -6,5 +6,5 @@ import java.util.UUID;
 public interface UserRepository {
     Optional<User> getUserById(UUID userId);
 
-    boolean saveUser(User user);
+    void saveUser(User user);
 }

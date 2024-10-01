@@ -66,12 +66,11 @@ class JdbcUserRepositoryIntegrationTest {
     @Test
     void shouldSaveAUser() {
         // GIVEN
-        boolean saveResult = userRepository.saveUser(user);
+        userRepository.saveUser(user);
 
         // THEN
         Optional<User> result = userRepository.getUserById(user.getId());
         assertThat(result).isEqualTo(Optional.of(user));
-        assertThat(saveResult).isTrue();
     }
 
     @Test
@@ -81,11 +80,10 @@ class JdbcUserRepositoryIntegrationTest {
         User userWithNewEmail = new User(userId, email2);
 
         // WHEN
-        boolean isUserSaved = userRepository.saveUser(userWithNewEmail);
+        userRepository.saveUser(userWithNewEmail);
         Optional<User> userUpdated = userRepository.getUserById(userWithNewEmail.getId());
 
         // THEN
-        assertThat(isUserSaved).isTrue();
         assertThat(userUpdated).isPresent();
         assertThat(userWithNewEmail).isEqualTo(userUpdated.get());
         assertThat(user.getEmail()).isNotEqualTo(userWithNewEmail.getEmail());
