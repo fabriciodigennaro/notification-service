@@ -20,6 +20,7 @@ repositories {
 
 dependencies {
 	val REST_ASSURED = "5.5.0"
+	val RETROFIT = "2.11.0"
 
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -31,6 +32,8 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("jakarta.mail:jakarta.mail-api:2.1.3")
+	implementation("com.squareup.retrofit2:retrofit:$RETROFIT")
+	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 
 	// Lombok
 	compileOnly("org.projectlombok:lombok:1.18.34")
@@ -140,7 +143,7 @@ tasks.apply {
 		violationRules {
 			rule {
 				limit {
-					minimum = "0.75".toBigDecimal()
+					minimum = "0.80".toBigDecimal()
 				}
 			}
 		}

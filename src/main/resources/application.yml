@@ -33,3 +33,10 @@ spring:
             required: true
           timeout: 5000
           write-timeout: 5000
+
+clients:
+  user:
+    url: "https://user-service"
+    timeout:
+      connect: 5000
+      read: 5000

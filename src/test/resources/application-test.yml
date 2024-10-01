@@ -20,7 +20,7 @@ spring:
           write-timeout: 5000
 
 clients:
-  payment:
+  user:
     url: http://localhost:${wiremock.port:1080}
     timeout:
       connect: 1000
