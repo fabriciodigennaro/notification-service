@@ -23,7 +23,7 @@ class CompositeUserFetcherTest {
 
     UUID userId = UUID.randomUUID();
     String userEmail = "dummy@email.com";
-    User user = new User(userId, userEmail);
+    User user = new User(userId, userEmail, "john", "doe");
 
     @Test
     void shouldFetchUserFromUserRepository() {

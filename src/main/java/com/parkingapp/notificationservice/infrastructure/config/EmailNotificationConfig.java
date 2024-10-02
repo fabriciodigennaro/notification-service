@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
+import org.thymeleaf.templatemode.TemplateMode;
+import org.thymeleaf.templateresolver.StringTemplateResolver;
 
 import java.util.Properties;
 
@@ -16,9 +20,10 @@ public class EmailNotificationConfig {
     @Bean
     public EmailService emailService(
             JavaMailSender javaMailSender,
-            @Value("${spring.email.sender-email}") String sender
+            @Value("${spring.email.sender-email}") String sender,
+            TemplateEngine templateEngine
     ) {
-        return new JmsEmailService(javaMailSender, sender);
+        return new JmsEmailService(javaMailSender, sender, templateEngine);
     }
 
     @Bean
@@ -41,5 +46,14 @@ public class EmailNotificationConfig {
         props.put("mail.smtp.auth", smtpAuth);
         props.put("mail.smtp.starttls.enable", enableStartTls);
         return mailSender;
+    }
+
+    @Bean
+    public SpringTemplateEngine templateEngine() {
+        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+        StringTemplateResolver stringTemplateResolver = new StringTemplateResolver();
+        stringTemplateResolver.setTemplateMode(TemplateMode.HTML);
+        templateEngine.setTemplateResolver(stringTemplateResolver);
+        return templateEngine;
     }
 }

@@ -1,14 +1,15 @@
 package com.parkingapp.notificationservice.application.sendemailnotification;
 
 import com.parkingapp.notificationservice.domain.email.EmailNotification;
+import com.parkingapp.notificationservice.domain.email.EmailRequest;
 import com.parkingapp.notificationservice.domain.email.EmailService;
 import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
 import com.parkingapp.notificationservice.domain.user.User;
 import com.parkingapp.notificationservice.domain.user.UserFetcher;
 
+import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 
 import static com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationResponse.*;
 
@@ -27,24 +28,31 @@ public class SendEmailNotificationUseCase {
         this.emailService = emailService;
     }
 
-    public SendEmailNotificationResponse execute(UUID userId, UUID templateId) {
-        Optional<EmailTemplate> emailTemplate = emailTemplateRepository.getEmailTemplateById(templateId);
-        Optional<User> userEmailAddress = userFetcher.fetch(userId);
+    public SendEmailNotificationResponse execute(EmailRequest request) {
+        Optional<EmailTemplate> emailTemplate = emailTemplateRepository.getEmailTemplateById(request.getTemplateId());
+        Optional<User> user = userFetcher.fetch(request.getUserId());
+        Map<String, Object> params = request.getParams();
 
         if (emailTemplate.isEmpty()) {
             return new EmailTemplateFoundFailure();
         }
 
-        if (userEmailAddress.isEmpty()) {
+        if (user.isEmpty()) {
             return new UserEmailAddressFailure();
         }
+        params.put("name", user.get().getName());
 
         EmailNotification emailNotification = new EmailNotification(
-                userEmailAddress.get().getEmail(),
+                user.get().getEmail(),
                 emailTemplate.get().getSubject(),
-                emailTemplate.get().getBody()
+                emailTemplate.get().getBody(),
+                params
         );
-        this.emailService.send(emailNotification);
-        return new Successful();
+        try {
+            this.emailService.send(emailNotification);
+            return new Successful();
+        } catch (Exception e) {
+            return new Failure();
+        }
     }
 }
