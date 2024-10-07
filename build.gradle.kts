@@ -46,7 +46,7 @@ dependencies {
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:5.11.1"))
+	testImplementation(platform("org.junit:junit-bom:5.11.2"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.assertj:assertj-core:3.26.3")
@@ -63,7 +63,7 @@ dependencies {
 	testImplementation("org.wiremock:wiremock-standalone:3.9.1")
 	testImplementation("org.awaitility:awaitility:4.2.2")
 	testImplementation("com.tngtech.archunit:archunit:1.3.0")
-	testImplementation("com.icegreen:greenmail:2.0.1")
+	testImplementation("com.icegreen:greenmail:2.1.0")
 }
 
 jacoco {
