@@ -29,7 +29,7 @@ class JdbcUserRepositoryIntegrationTest {
     UUID userId2 = UUID.randomUUID();
     String email = "dummy@email.com";
     String email2 = "dummy2@email.com";
-    User user = new User(userId, email);
+    User user = new User(userId, email, "john", "doe");
 
     @BeforeEach
     void setUp() {
@@ -77,7 +77,7 @@ class JdbcUserRepositoryIntegrationTest {
     void shouldUpdateAUser() {
         // GIVEN
         userRepository.saveUser(user);
-        User userWithNewEmail = new User(userId, email2);
+        User userWithNewEmail = new User(userId, email2, "tim", "robs");
 
         // WHEN
         userRepository.saveUser(userWithNewEmail);

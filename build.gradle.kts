@@ -32,6 +32,8 @@ dependencies {
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("jakarta.mail:jakarta.mail-api:2.1.3")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation("org.thymeleaf:thymeleaf:3.1.2.RELEASE")
 	implementation("com.squareup.retrofit2:retrofit:$RETROFIT")
 	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 

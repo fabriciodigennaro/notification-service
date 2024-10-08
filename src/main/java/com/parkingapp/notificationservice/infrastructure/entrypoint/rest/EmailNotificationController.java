@@ -1,6 +1,7 @@
 package com.parkingapp.notificationservice.infrastructure.entrypoint.rest;
 
 import com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationUseCase;
+import com.parkingapp.notificationservice.domain.email.EmailRequest;
 import com.parkingapp.notificationservice.infrastructure.entrypoint.rest.request.SendEmailRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -57,7 +58,12 @@ public class EmailNotificationController {
     })
     @PostMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void sendEmail(@RequestBody @Valid SendEmailRequest request) {
-        sendEmailNotificationUseCase.execute(request.getUserId(), request.getTemplateId());
+    public void sendEmail(@RequestBody @Valid SendEmailRequest request) throws Exception {
+        EmailRequest emailRequest = new EmailRequest(
+                request.getUserId(),
+                request.getTemplateId(),
+                request.getParams()
+        );
+        sendEmailNotificationUseCase.execute(emailRequest);
     }
 }
