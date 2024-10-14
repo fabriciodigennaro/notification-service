@@ -2,6 +2,7 @@ package com.parkingapp.notificationservice.infrastructure.entrypoint.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationUseCase;
+import com.parkingapp.notificationservice.domain.email.EmailRequest;
 import com.parkingapp.notificationservice.infrastructure.fixtures.initializers.testannotation.ContractTest;
 import io.restassured.http.ContentType;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
@@ -13,6 +14,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.parkingapp.notificationservice.application.sendemailnotification.SendEmailNotificationResponse.*;
@@ -36,6 +39,9 @@ class EmailNotificationControllerContractTest {
 
     private final UUID userId = UUID.randomUUID();
     private final UUID templateId = UUID.randomUUID();
+    private final Map<String, Object> params = new HashMap<>();
+    private final EmailRequest request = new EmailRequest(userId, templateId, params);
+
     String requestBody = String.format(
             """
                 {
@@ -51,7 +57,7 @@ class EmailNotificationControllerContractTest {
     @Test
     public void shouldSentAnEmail() throws Exception {
         // GIVEN
-        when(sendEmailNotificationUseCase.execute(userId, templateId)).thenReturn(new Successful());
+        when(sendEmailNotificationUseCase.execute(request)).thenReturn(new Successful());
 
         // WHEN
         MockMvcResponse response = whenARequestToSendAnEmailIsReceived(requestBody);
@@ -59,11 +65,11 @@ class EmailNotificationControllerContractTest {
         // THEN
         response.then()
                 .statusCode(HttpStatus.ACCEPTED.value());
-        verify(sendEmailNotificationUseCase).execute(userId, templateId);
+        verify(sendEmailNotificationUseCase).execute(request);
     }
 
     @Test
-    public void shouldReturn400WhenBodyIsNotCorrect() {
+    public void shouldReturn400WhenBodyIsNotCorrect() throws Exception {
         // GIVEN
         String incorrectRequestBody = String.format(
                 """
@@ -83,13 +89,13 @@ class EmailNotificationControllerContractTest {
         // THEN
         response.then()
                 .statusCode(HttpStatus.BAD_REQUEST.value());
-        verify(sendEmailNotificationUseCase, never()).execute(userId, templateId);
+        verify(sendEmailNotificationUseCase, never()).execute(request);
     }
 
     @Test
-    public void shouldReturn500WhenErrorOccurs() {
+    public void shouldReturn500WhenErrorOccurs() throws Exception {
         // GIVEN
-        doThrow(new RuntimeException("ops")).when(sendEmailNotificationUseCase).execute(userId, templateId);
+        doThrow(new RuntimeException("ops")).when(sendEmailNotificationUseCase).execute(request);
 
         // WHEN
         MockMvcResponse response = whenARequestToSendAnEmailIsReceived(requestBody);
@@ -98,7 +104,7 @@ class EmailNotificationControllerContractTest {
         response.then()
                 .statusCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
 
-        verify(sendEmailNotificationUseCase).execute(userId, templateId);
+        verify(sendEmailNotificationUseCase).execute(request);
     }
 
     private MockMvcResponse whenARequestToSendAnEmailIsReceived(String requestBody) {
