@@ -1,6 +1,6 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.3.4"
+	id("org.springframework.boot") version "3.3.5"
 	id("io.spring.dependency-management") version "1.1.6"
 	kotlin("jvm") version "2.0.21"
 	kotlin("plugin.spring") version "2.0.21"
@@ -48,13 +48,13 @@ dependencies {
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:5.11.2"))
+	testImplementation(platform("org.junit:junit-bom:5.11.3"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.assertj:assertj-core:3.26.3")
 	testImplementation("org.mockito:mockito-core:5.+")
 
-	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.2"))
+	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.3"))
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("io.rest-assured:rest-assured:$REST_ASSURED")
@@ -62,7 +62,7 @@ dependencies {
 	testImplementation("io.rest-assured:xml-path:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-mock-mvc:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-commons:$REST_ASSURED")
-	testImplementation("org.wiremock:wiremock-standalone:3.9.1")
+	testImplementation("org.wiremock:wiremock-standalone:3.9.2")
 	testImplementation("org.awaitility:awaitility:4.2.2")
 	testImplementation("com.tngtech.archunit:archunit:1.3.0")
 	testImplementation("com.icegreen:greenmail:2.1.0")
