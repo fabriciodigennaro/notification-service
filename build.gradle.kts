@@ -36,12 +36,12 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 
 	// Lombok
-	compileOnly("org.projectlombok:lombok:1.18.34")
-	annotationProcessor("org.projectlombok:lombok:1.18.34")
+	compileOnly("org.projectlombok:lombok:1.18.36")
+	annotationProcessor("org.projectlombok:lombok:1.18.36")
 
 	// Lombok
-	testCompileOnly("org.projectlombok:lombok:1.18.34")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
+	testCompileOnly("org.projectlombok:lombok:1.18.36")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
 
 
 	// Test dependencies
@@ -63,7 +63,7 @@ dependencies {
 	testImplementation("org.wiremock:wiremock-standalone:3.9.2")
 	testImplementation("org.awaitility:awaitility:4.2.2")
 	testImplementation("com.tngtech.archunit:archunit:1.3.0")
-	testImplementation("com.icegreen:greenmail:2.1.0")
+	testImplementation("com.icegreen:greenmail:2.1.1")
 }
 
 jacoco {
