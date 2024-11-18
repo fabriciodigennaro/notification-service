@@ -33,7 +33,7 @@ public class SendEmailRequest {
     @Schema(
             name = "params",
             description = "Additional information to add to the template",
-            example = "{\"startDate\": \"2024-09-23 08:35:25.101794\", \"endDate\": \"2024-09-23 09:35:25.101794\"}"
+            example = "{\"startDate\": \"8:35 am\", \"endDate\": \"9:35 am\"}"
     )
     private Map<String, Object> params;
 }

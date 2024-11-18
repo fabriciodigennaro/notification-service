@@ -37,14 +37,20 @@ public class JdbcUserRepository implements UserRepository {
     public void saveUser(User user) {
         MapSqlParameterSource params = new MapSqlParameterSource()
                 .addValue("userId", user.getId())
-                .addValue("email", user.getEmail());
+                .addValue("email", user.getEmail())
+                .addValue("name", user.getName())
+                .addValue("lastname", user.getLastname());
 
 
         namedParameterJdbcTemplate.update(
                 """
-                INSERT INTO users(user_id, email)
-                VALUES (:userId, :email)
-                ON CONFLICT (user_id) DO UPDATE SET email = :email
+                INSERT INTO users(user_id, email, name, lastname)
+                VALUES (:userId, :email, :name, :lastname)
+                ON CONFLICT (user_id)
+                DO UPDATE SET
+                    email = EXCLUDED.email,
+                    name = EXCLUDED.name,
+                    lastname = EXCLUDED.lastname
                 """,
                 params
         );
@@ -56,7 +62,9 @@ public class JdbcUserRepository implements UserRepository {
         public User mapRow(ResultSet rs, int rowNum) throws SQLException {
             return new User(
                     UUID.fromString(rs.getString("user_id")),
-                    rs.getString("email")
+                    rs.getString("email"),
+                    rs.getString("name"),
+                    rs.getString("lastname")
             );
         }
     }
