@@ -1,9 +1,9 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.3.5"
+	id("org.springframework.boot") version "3.4.0"
 	id("io.spring.dependency-management") version "1.1.6"
-	kotlin("jvm") version "2.0.21"
-	kotlin("plugin.spring") version "2.0.21"
+	kotlin("jvm") version "2.1.0"
+	kotlin("plugin.spring") version "2.1.0"
 	jacoco
 }
 
@@ -27,7 +27,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
 	implementation("org.postgresql:postgresql:42.7.4")
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
@@ -52,7 +52,7 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.26.3")
 	testImplementation("org.mockito:mockito-core:5.+")
 
-	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.3"))
+	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("io.rest-assured:rest-assured:$REST_ASSURED")
@@ -60,10 +60,10 @@ dependencies {
 	testImplementation("io.rest-assured:xml-path:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-mock-mvc:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-commons:$REST_ASSURED")
-	testImplementation("org.wiremock:wiremock-standalone:3.9.2")
+	testImplementation("org.wiremock:wiremock-standalone:3.10.0")
 	testImplementation("org.awaitility:awaitility:4.2.2")
 	testImplementation("com.tngtech.archunit:archunit:1.3.0")
-	testImplementation("com.icegreen:greenmail:2.1.1")
+	testImplementation("com.icegreen:greenmail:2.1.2")
 }
 
 jacoco {
