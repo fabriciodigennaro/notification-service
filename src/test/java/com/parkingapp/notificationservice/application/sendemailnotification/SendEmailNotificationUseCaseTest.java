@@ -1,6 +1,7 @@
 package com.parkingapp.notificationservice.application.sendemailnotification;
 
 import com.parkingapp.notificationservice.domain.email.EmailNotification;
+import com.parkingapp.notificationservice.domain.email.EmailRequest;
 import com.parkingapp.notificationservice.domain.email.EmailService;
 import com.parkingapp.notificationservice.domain.email.EmailTemplate;
 import com.parkingapp.notificationservice.domain.email.EmailTemplateRepository;
@@ -8,6 +9,8 @@ import com.parkingapp.notificationservice.domain.user.User;
 import com.parkingapp.notificationservice.domain.user.UserFetcher;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -26,6 +29,7 @@ class SendEmailNotificationUseCaseTest {
 
     UUID userId = UUID.randomUUID();
     UUID templateId = UUID.randomUUID();
+    private final Map<String, Object> params = new HashMap<>();
     String userEmailAddress = "test@email.com";
     String subject = "test subject";
     String body = "test body";
@@ -36,23 +40,28 @@ class SendEmailNotificationUseCaseTest {
     );
     private final User user = new User(
             userId,
-            userEmailAddress
+            userEmailAddress,
+            "john",
+            "doe"
     );
 
+    private final EmailRequest request = new EmailRequest(userId, templateId, params);
+
     @Test
-    void shouldSendAnEmailNotification() {
+    void shouldSendAnEmailNotification() throws Exception {
         // GIVEN
         String userEmailAddress = "test@email.com";
         EmailNotification emailNotification = new EmailNotification(
                 userEmailAddress,
                 emailTemplate.getSubject(),
-                emailTemplate.getBody()
+                emailTemplate.getBody(),
+                params
         );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
         when(userFetcher.fetch(userId)).thenReturn(Optional.of(user));
 
         // WHEN
-        SendEmailNotificationResponse result = useCase.execute(userId, templateId);
+        SendEmailNotificationResponse result = useCase.execute(request);
 
         // THEN
         assertThat(result).isInstanceOf(Successful.class);
@@ -62,19 +71,20 @@ class SendEmailNotificationUseCaseTest {
     }
 
     @Test
-    void shouldReturnAEmailTemplateFoundFailureIfEmailTemplateNotExists() {
+    void shouldReturnAEmailTemplateFoundFailureIfEmailTemplateNotExists() throws Exception {
         // GIVEN
         String userEmailAddress = "test@email.com";
         EmailNotification emailNotification = new EmailNotification(
                 userEmailAddress,
                 emailTemplate.getSubject(),
-                emailTemplate.getBody()
+                emailTemplate.getBody(),
+                params
         );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.empty());
         when(userFetcher.fetch(userId)).thenReturn(Optional.of(user));
 
         // WHEN
-        SendEmailNotificationResponse result = useCase.execute(userId, templateId);
+        SendEmailNotificationResponse result = useCase.execute(request);
 
         // THEN
         assertThat(result).isInstanceOf(EmailTemplateFoundFailure.class);
@@ -84,19 +94,20 @@ class SendEmailNotificationUseCaseTest {
     }
 
     @Test
-    void shouldReturnAUserEmailAddressFailureIfEmailTemplateNotExists() {
+    void shouldReturnAUserEmailAddressFailureIfEmailTemplateNotExists() throws Exception {
         // GIVEN
         String userEmailAddress = "test@email.com";
         EmailNotification emailNotification = new EmailNotification(
                 userEmailAddress,
                 emailTemplate.getSubject(),
-                emailTemplate.getBody()
+                emailTemplate.getBody(),
+                params
         );
         when(emailTemplateRepository.getEmailTemplateById(templateId)).thenReturn(Optional.of(emailTemplate));
         when(userFetcher.fetch(userId)).thenReturn(Optional.empty());
 
         // WHEN
-        SendEmailNotificationResponse result = useCase.execute(userId, templateId);
+        SendEmailNotificationResponse result = useCase.execute(request);
 
         // THEN
         assertThat(result).isInstanceOf(UserEmailAddressFailure.class);
