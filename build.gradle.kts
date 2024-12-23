@@ -1,7 +1,7 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.4.0"
-	id("io.spring.dependency-management") version "1.1.6"
+	id("org.springframework.boot") version "3.4.1"
+	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("jvm") version "2.1.0"
 	kotlin("plugin.spring") version "2.1.0"
 	jacoco
@@ -33,7 +33,7 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("jakarta.mail:jakarta.mail-api:2.1.3")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-	implementation("org.thymeleaf:thymeleaf:3.1.2.RELEASE")
+	implementation("org.thymeleaf:thymeleaf:3.1.3.RELEASE")
 	implementation("com.squareup.retrofit2:retrofit:$RETROFIT")
 	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 
@@ -48,10 +48,10 @@ dependencies {
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:5.11.3"))
+	testImplementation(platform("org.junit:junit-bom:5.11.4"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testImplementation("org.assertj:assertj-core:3.26.3")
+	testImplementation("org.assertj:assertj-core:3.27.0")
 	testImplementation("org.mockito:mockito-core:5.+")
 
 	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
