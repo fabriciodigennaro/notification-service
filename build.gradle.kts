@@ -27,7 +27,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.7.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")
 	implementation("org.postgresql:postgresql:42.7.4")
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
@@ -51,7 +51,7 @@ dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.11.4"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testImplementation("org.assertj:assertj-core:3.27.0")
+	testImplementation("org.assertj:assertj-core:3.27.2")
 	testImplementation("org.mockito:mockito-core:5.+")
 
 	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
