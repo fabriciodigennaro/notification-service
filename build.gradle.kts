@@ -1,6 +1,6 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.4.1"
+	id("org.springframework.boot") version "3.4.2"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("jvm") version "2.1.0"
 	kotlin("plugin.spring") version "2.1.0"
@@ -27,8 +27,8 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0")
-	implementation("org.postgresql:postgresql:42.7.4")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.4")
+	implementation("org.postgresql:postgresql:42.7.5")
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("jakarta.mail:jakarta.mail-api:2.1.3")
@@ -51,7 +51,7 @@ dependencies {
 	testImplementation(platform("org.junit:junit-bom:5.11.4"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testImplementation("org.assertj:assertj-core:3.27.2")
+	testImplementation("org.assertj:assertj-core:3.27.3")
 	testImplementation("org.mockito:mockito-core:5.+")
 
 	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.4"))
