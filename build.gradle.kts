@@ -1,9 +1,9 @@
 plugins {
 	java
-	id("org.springframework.boot") version "3.4.3"
+	id("org.springframework.boot") version "3.4.5"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("jvm") version "2.1.10"
-	kotlin("plugin.spring") version "2.1.10"
+	kotlin("jvm") version "2.1.20"
+	kotlin("plugin.spring") version "2.1.20"
 	jacoco
 }
 
@@ -27,7 +27,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
 	implementation("org.postgresql:postgresql:42.7.5")
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
@@ -38,23 +38,23 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 
 	// Lombok
-	compileOnly("org.projectlombok:lombok:1.18.36")
-	annotationProcessor("org.projectlombok:lombok:1.18.36")
+	compileOnly("org.projectlombok:lombok:1.18.38")
+	annotationProcessor("org.projectlombok:lombok:1.18.38")
 
 	// Lombok
-	testCompileOnly("org.projectlombok:lombok:1.18.36")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.36")
+	testCompileOnly("org.projectlombok:lombok:1.18.38")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.38")
 
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:5.12.0"))
+	testImplementation(platform("org.junit:junit-bom:5.12.2"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.assertj:assertj-core:3.27.3")
 	testImplementation("org.mockito:mockito-core:5.+")
 
-	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.6"))
+	testImplementation(platform("org.testcontainers:testcontainers-bom:1.21.0"))
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("io.rest-assured:rest-assured:$REST_ASSURED")
@@ -62,9 +62,9 @@ dependencies {
 	testImplementation("io.rest-assured:xml-path:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-mock-mvc:$REST_ASSURED")
 	testImplementation("io.rest-assured:spring-commons:$REST_ASSURED")
-	testImplementation("org.wiremock:wiremock-standalone:3.12.1")
+	testImplementation("org.wiremock:wiremock-standalone:3.13.0")
 	testImplementation("org.awaitility:awaitility:4.3.0")
-	testImplementation("com.tngtech.archunit:archunit:1.4.0")
+	testImplementation("com.tngtech.archunit:archunit:1.4.1")
 	testImplementation("com.icegreen:greenmail:2.1.3")
 }
 
