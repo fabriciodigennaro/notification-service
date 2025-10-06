@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
 	val REST_ASSURED = "5.5.1"
-	val RETROFIT = "2.11.0"
+	val RETROFIT = "3.0.0"
 
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
