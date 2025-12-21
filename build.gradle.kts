@@ -20,7 +20,7 @@ repositories {
 
 dependencies {
 	val REST_ASSURED = "5.5.1"
-	val RETROFIT = "2.11.0"
+	val RETROFIT = "3.0.0"
 
 	implementation("org.springframework.boot:spring-boot-starter")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -48,7 +48,7 @@ dependencies {
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:5.12.0"))
+	testImplementation(platform("org.junit:junit-bom:6.0.0"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	testImplementation("org.assertj:assertj-core:3.27.3")
