@@ -54,7 +54,7 @@ dependencies {
 	testImplementation("org.assertj:assertj-core:3.27.6")
 	testImplementation("org.mockito:mockito-core:5.+")
 
-	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.6"))
+	testImplementation(platform("org.testcontainers:testcontainers-bom:2.0.3"))
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
 	testImplementation("io.rest-assured:rest-assured:$REST_ASSURED")
