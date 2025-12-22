@@ -19,7 +19,7 @@ repositories {
 }
 
 dependencies {
-	val REST_ASSURED = "5.5.1"
+	val REST_ASSURED = "6.0.0"
 	val RETROFIT = "3.0.0"
 
 	implementation("org.springframework.boot:spring-boot-starter")
