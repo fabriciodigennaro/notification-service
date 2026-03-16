@@ -2,8 +2,8 @@ plugins {
 	java
 	id("org.springframework.boot") version "3.4.3"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("jvm") version "2.3.0"
-	kotlin("plugin.spring") version "2.3.0"
+	kotlin("jvm") version "2.3.10"
+	kotlin("plugin.spring") version "2.3.10"
 	jacoco
 }
 
@@ -28,7 +28,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-jdbc")
 	implementation("org.springframework.boot:spring-boot-starter-mail")
 	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.5")
-	implementation("org.postgresql:postgresql:42.7.8")
+	implementation("org.postgresql:postgresql:42.7.10")
 	implementation("org.flywaydb:flyway-core:9.11.0")
 	implementation("org.springdoc:springdoc-openapi-ui:1.8.0")
 	implementation("jakarta.mail:jakarta.mail-api:2.1.5")
@@ -38,20 +38,20 @@ dependencies {
 	implementation("com.squareup.retrofit2:converter-jackson:$RETROFIT")
 
 	// Lombok
-	compileOnly("org.projectlombok:lombok:1.18.42")
-	annotationProcessor("org.projectlombok:lombok:1.18.42")
+	compileOnly("org.projectlombok:lombok:1.18.44")
+	annotationProcessor("org.projectlombok:lombok:1.18.44")
 
 	// Lombok
-	testCompileOnly("org.projectlombok:lombok:1.18.42")
-	testAnnotationProcessor("org.projectlombok:lombok:1.18.42")
+	testCompileOnly("org.projectlombok:lombok:1.18.44")
+	testAnnotationProcessor("org.projectlombok:lombok:1.18.44")
 
 
 	// Test dependencies
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation(platform("org.junit:junit-bom:6.0.1"))
+	testImplementation(platform("org.junit:junit-bom:6.0.3"))
 	testImplementation("org.junit.jupiter:junit-jupiter")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	testImplementation("org.assertj:assertj-core:3.27.6")
+	testImplementation("org.assertj:assertj-core:3.27.7")
 	testImplementation("org.mockito:mockito-core:5.+")
 
 	testImplementation(platform("org.testcontainers:testcontainers-bom:1.20.6"))
